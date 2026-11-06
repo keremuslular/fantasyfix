@@ -44,7 +44,7 @@ Appears under the app's **Build** section after processing (5–15 minutes).
 **Keywords** (100 max, comma separated, no spaces needed; no trademarks):
 > fantasy,basketball,stats,matchup,roster,league,hoops,safari,extension,fix,scores,game,sports
 
-**Support URL:** `https://keremuslular.github.io/fantasyfix/` (needs the GitHub Pages site)
+**Support URL:** `https://fantasyfix.keremuslular.com/` (Cloudflare, see wrangler.jsonc)
 **Marketing URL:** optional, same as support
 **Copyright:** `2026 Kerem Uslular`
 
@@ -55,7 +55,7 @@ Appears under the app's **Build** section after processing (5–15 minutes).
 - Age rating: answer **None / No** to everything → 4+
 
 **App Privacy tab**
-- Privacy Policy URL: `https://keremuslular.github.io/fantasyfix/privacy.html`
+- Privacy Policy URL: `https://fantasyfix.keremuslular.com/privacy`
 - Data collection: **No, we do not collect data from this app** → "Data Not Collected"
 
 **Pricing and Availability**

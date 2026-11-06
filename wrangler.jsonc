@@ -1,0 +1,14 @@
+// Cloudflare: serves the static site in docs/ at fantasyfix.keremuslular.com (no server code).
+// Deploy: npx wrangler deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fantasyfix-site",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./docs",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [{ "pattern": "fantasyfix.keremuslular.com", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false
+}

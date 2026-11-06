@@ -24,7 +24,7 @@ extension/          the extension (shared by every browser)
   inject.js         hostname swap inside fantasy.espn.com pages (needed for Safari)
   icons/
 safari/FantasyFix/  Xcode project: Mac app that carries the Safari extension (uses extension/ directly)
-docs/               website for GitHub Pages: downloads, support, privacy policy
+docs/               website (fantasyfix.keremuslular.com): downloads, support, privacy policy
 store/              store listing text (LISTING.md), privacy policy, screenshot, promo tile, icon
   screenshot.html   source for the screenshot / promo images (rendered with headless Chrome)
 tools/
@@ -65,7 +65,7 @@ No iPhone version: on phones people use the ESPN app, which an extension can't c
 
 ## Website
 
-`docs/` is a small static site (download links, setup steps, support, privacy policy) meant for GitHub Pages. The Mac App Store requires its support and privacy URLs.
+`docs/` is a small static site (download links, setup steps, support, privacy policy), served by Cloudflare at https://fantasyfix.keremuslular.com ([wrangler.jsonc](wrangler.jsonc)). Deploy changes with `npx wrangler deploy`. The Mac App Store listing uses its support and privacy URLs.
 
 ## Changing the extension
 
