@@ -3,17 +3,24 @@
 #   tools/release-mac.sh download   Developer ID signed + notarized zip in dist/ (for direct download)
 #   tools/release-mac.sh appstore   upload to App Store Connect (Mac App Store / TestFlight)
 # Uses the Xcode-signed-in account and Apple's cloud-managed certificates; no passwords needed here.
-# The build number is the current UTC time, so every build is unique.
+# Each run bumps the build number (CURRENT_PROJECT_VERSION in the Xcode project) by 1.
+# The app version is synced from extension/manifest.json into the project.
 set -euo pipefail
 MODE="${1:-}"
 [[ "$MODE" == download || "$MODE" == appstore ]] || { echo "usage: $0 download|appstore"; exit 1; }
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT/safari/FantasyFix"
-BUILD=$(date -u +%Y%m%d%H%M)
-WORK="${TMPDIR:-/tmp}/fantasyfix-mac-$BUILD"
+PROJ="FantasyFix.xcodeproj/project.xcproj"
+PREV=$(grep -oE '"CURRENT_PROJECT_VERSION": "[0-9]+"' "$PROJ" | grep -oE '[0-9]+' | sort -n | tail -1)
+BUILD=$((PREV + 1))
+sed -i '' -E "s/\"CURRENT_PROJECT_VERSION\": \"[0-9]+\"/\"CURRENT_PROJECT_VERSION\": \"$BUILD\"/g" "$PROJ"
+echo "Build number: $PREV -> $BUILD (commit the project change after a successful upload)"
+WORK="${TMPDIR:-/tmp}/fantasyfix-mac-$BUILD-$(date +%s)"
 mkdir -p "$WORK" "$ROOT/dist"
 VERSION=$(python3 -c 'import json; print(json.load(open("'"$ROOT"'/extension/manifest.json"))["version"])')
+# keep the app version in the Xcode project equal to the extension version
+sed -i '' -E "s/\"MARKETING_VERSION\": \"[^\"]+\"/\"MARKETING_VERSION\": \"$VERSION\"/g" "$PROJ"
 
 if [[ "$MODE" == download ]]; then METHOD=developer-id; else METHOD=app-store-connect; fi
 cat > "$WORK/ExportOptions.plist" <<EOF
@@ -32,7 +39,7 @@ EOF
 
 echo "Archiving $VERSION ($BUILD)..."
 xcodebuild archive -scheme FantasyFix -destination "generic/platform=macOS" -archivePath "$WORK/FantasyFix.xcarchive" \
-  -allowProvisioningUpdates MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$BUILD" -quiet
+  -allowProvisioningUpdates -quiet
 
 echo "Exporting ($METHOD) and uploading to Apple..."
 xcodebuild -exportArchive -archivePath "$WORK/FantasyFix.xcarchive" -exportOptionsPlist "$WORK/ExportOptions.plist" \
