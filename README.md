@@ -1,6 +1,6 @@
 # FantasyFix
 
-Browser extension for Chrome, Firefox and Safari (Mac + iPhone/iPad) that fixes missing matchups, game status and past-day stats on ESPN Fantasy.
+Browser extension for Chrome, Firefox and Safari (Mac) that fixes missing matchups, game status and past-day stats on ESPN Fantasy.
 
 ## What it does
 
@@ -23,11 +23,13 @@ extension/          the extension (shared by every browser)
   rules.json        redirect rule (Chrome, Firefox)
   inject.js         hostname swap inside fantasy.espn.com pages (needed for Safari)
   icons/
-safari/FantasyFix/  Xcode project: Safari app + extension for macOS and iOS (uses extension/ directly)
+safari/FantasyFix/  Xcode project: Mac app that carries the Safari extension (uses extension/ directly)
+docs/               website for GitHub Pages: downloads, support, privacy policy
 store/              store listing text (LISTING.md), privacy policy, screenshot, promo tile, icon
   screenshot.html   source for the screenshot / promo images (rendered with headless Chrome)
 tools/
   package.sh        builds dist/fantasyfix-<version>.zip for Chrome / Firefox
+  release-mac.sh    Mac app: notarized download zip, or App Store upload
   test-chrome.mjs   loads ESPN Fantasy in headless Chrome with/without the extension
   make_icons.py     draws the icons
 ```
@@ -50,28 +52,26 @@ Install for yourself (temporary, until Firefox restarts): `about:debugging` → 
 
 Permanent and shareable: upload the same zip at [addons.mozilla.org/developers](https://addons.mozilla.org/developers/) (free). Choose **On your own** to get a signed `.xpi` you can send to people directly, or list it publicly.
 
-## Safari (Mac, iPhone, iPad)
+## Safari (Mac)
 
-Open `safari/FantasyFix/FantasyFix.xcodeproj`. The team (`2CVT63B2DP`) and bundle ID (`com.keremuslular.FantasyFix`) are already set.
+Safari extensions ship inside a small Mac app: `safari/FantasyFix/FantasyFix.xcodeproj` (team `2CVT63B2DP`, bundle ID `com.keremuslular.FantasyFix`, macOS 13+). It uses the files in `extension/` directly.
 
-**Mac:** run the **FantasyFix (macOS)** scheme once, then go to Safari → Settings → Extensions, tick **FantasyFix**, and allow it on espn.com.
+- **Direct download:** `bash tools/release-mac.sh download` builds, signs with Developer ID, notarizes and writes `dist/FantasyFix-<version>-mac.zip`. Share it (e.g. as a GitHub Release asset).
+- **Mac App Store:** `bash tools/release-mac.sh appstore` uploads a build to App Store Connect. Listing text, screenshots and review notes: [store/MAC_APP_STORE.md](store/MAC_APP_STORE.md).
 
-**iPhone / TestFlight:**
-1. Create the app in [App Store Connect](https://appstoreconnect.apple.com) → Apps → **+** → New App, platform iOS (add macOS too if you want Mac Safari via TestFlight). Bundle ID `com.keremuslular.FantasyFix`, any unique name (e.g. "FantasyFix – Stats Fix").
-2. In Xcode, pick the **FantasyFix (iOS)** scheme and **Any iOS Device**, then Product → **Archive** → Distribute App → **TestFlight & App Store**.
-3. In App Store Connect → TestFlight: create an **external** group, add the build, fill in the short Beta App Review info, and turn on the **public link**. Send that link to the league.
-4. Each person installs it and then follows the steps the app shows:
-   - Settings → Apps → Safari → Extensions → **FantasyFix** → on.
-   - Permissions: **espn.com** → **Allow**.
-   - Use **fantasy.espn.com in Safari** (the extension can't change the ESPN app).
+Users open the app once, then Safari → Settings → Extensions → tick **FantasyFix** and allow it on espn.com.
 
-TestFlight builds expire after 90 days. Upload a new build (bump the build number) before then.
+No iPhone version: on phones people use the ESPN app, which an extension can't change.
+
+## Website
+
+`docs/` is a small static site (download links, setup steps, support, privacy policy) meant for GitHub Pages. The Mac App Store requires its support and privacy URLs.
 
 ## Changing the extension
 
 Edit `extension/`, bump `version` in `manifest.json`, then:
 - Chrome: reload on `chrome://extensions`, or upload a new zip.
 - Firefox: upload a new zip.
-- Safari: bump `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` in Xcode and archive again.
+- Safari: `bash tools/release-mac.sh download` and/or `appstore` (the app version follows manifest.json; build numbers are automatic).
 
 Test against the real site: `node tools/test-chrome.mjs` (without) and `node tools/test-chrome.mjs --with-extension`.

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FantasyFix</title>
+<meta name="description" content="Browser extension that fixes missing matchups, game status and stats on ESPN Fantasy.">
+<link rel="icon" href="favicon.png"><link rel="stylesheet" href="style.css">
+</head><body><main>
+<header><img src="icon.png" alt=""><h1>FantasyFix</h1></header>
+<p class="lead">Fixes missing opponents, game times and past-day stats on ESPN Fantasy, in Chrome, Firefox and Safari.</p>
+
+<h2>Install</h2>
+<div class="grid">
+  <div class="card"><h3>Chrome, Edge, Brave</h3><p>From the Chrome Web Store.</p><a class="btn off" id="chrome" href="#">Coming soon</a></div>
+  <div class="card"><h3>Firefox</h3><p>From Firefox Add-ons.</p><a class="btn off" id="firefox" href="#">Coming soon</a></div>
+  <div class="card"><h3>Safari on Mac</h3><p>Download the app, open it once, then turn on the extension in Safari.</p><a class="btn" href="https://github.com/keremuslular/fantasyfix/releases/latest">Download for Mac</a></div>
+</div>
+
+<h2>Safari setup</h2>
+<ol>
+  <li>Unzip the download and move <b>FantasyFix</b> to your Applications folder. Open it once.</li>
+  <li>In Safari: <b>Settings → Extensions</b>, tick <b>FantasyFix</b>.</li>
+  <li>Allow it on <b>espn.com</b> when Safari asks (or via <b>Edit Websites…</b>), then reload fantasy.espn.com.</li>
+</ol>
+
+<h2>What it does</h2>
+<p>In some regions ESPN's stats server (<code>site.api.espn.com</code>) answers the fantasy site with “Access Denied”, so parts of the matchup and roster pages never load. ESPN serves the same data at <code>site.web.api.espn.com</code>, which isn't blocked. FantasyFix sends those requests there instead. That's all it does: it collects no data, shows no ads and changes nothing else.</p>
+<p>The ESPN mobile app can't be fixed by an extension; on phones, use fantasy.espn.com in a browser if you need it.</p>
+
+<h2>Support</h2>
+<p>Something not working? <a href="https://github.com/keremuslular/fantasyfix/issues">Open an issue on GitHub</a> with your browser, country and which page is missing data.</p>
+
+<footer><a href="privacy.html">Privacy policy</a> · <a href="https://github.com/keremuslular/fantasyfix">Source code</a><br>FantasyFix is an independent project and is not affiliated with, endorsed by or sponsored by ESPN.</footer>
+</main></body></html>

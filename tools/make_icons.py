@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Draws the FantasyFix icon (orange basketball on a navy rounded square) as PNGs.
-Pure standard library. Usage: make_icons.py OUT_DIR SIZE [SIZE ...] [--square]
---square fills the whole canvas and drops transparency (iOS app icon; iOS rounds it itself)."""
+Pure standard library. Usage: make_icons.py OUT_DIR SIZE [SIZE ...] [--square | --mac] [--style=hardwood|court|teal]
+--square fills the whole canvas and drops transparency (iOS app icon; iOS rounds it itself).
+--mac draws the macOS app icon: body inset on Apple's icon grid, with a soft shadow."""
 
 import math
 import struct
@@ -56,10 +57,36 @@ def court_line(x, y):
     return abs(d - 0.43) < LINE_W / 2 or abs(y - CY) < LINE_W / 2
 
 
+MAC = False  # macOS style: icon body inset with a transparent margin and soft shadow
+MAC_MARGIN = 100 / 1024  # Apple's macOS icon grid: 824px body on a 1024px canvas
+
+
+def rounded_rect_sdf(x, y, r=0.225):
+    """Signed distance to a rounded unit square (negative inside)."""
+    qx = abs(x - 0.5) - (0.5 - r)
+    qy = abs(y - 0.5) - (0.5 - r)
+    outside = math.hypot(max(qx, 0), max(qy, 0))
+    return outside + min(max(qx, qy), 0) - r
+
+
 def sample(x, y, square):
     """Colour (r, g, b, a) at one point of the unit square."""
+    if MAC:
+        scale = 1 - 2 * MAC_MARGIN
+        u, v = (x - MAC_MARGIN) / scale, (y - MAC_MARGIN) / scale
+        if rounded_rect_sdf(u, v) > 0:
+            # soft drop shadow, slightly below the body
+            d = rounded_rect_sdf(u, v - 0.02)
+            alpha = 0.32 * max(0.0, 1 - d / 0.045) if d > 0 else 0.32
+            return (0, 0, 0, round(255 * alpha))
+        return sample_body(u, v)
     if not square and not in_rounded_rect(x, y):
         return (0, 0, 0, 0)
+    return sample_body(x, y)
+
+
+def sample_body(x, y):
+    """Colour of the icon body (background + ball) at a point of the unit square."""
     bg = background(x, y)
 
     dx, dy = x - CX, y - CY
@@ -122,6 +149,7 @@ def write_png(path, n, square):
 
 
 if __name__ == "__main__":
+    MAC = "--mac" in sys.argv
     for a in sys.argv[1:]:
         if a.startswith("--style="):
             STYLE = a.split("=", 1)[1]
