@@ -4,10 +4,10 @@
     "priority": 1,
     "action": {
       "type": "redirect",
-      "redirect": { "regexSubstitution": "https://site.web.api.espn.com/\\1" }
+      "redirect": { "transform": { "host": "site.web.api.espn.com" } }
     },
     "condition": {
-      "regexFilter": "^https://site\\.api\\.espn\\.com/(.*)$",
+      "urlFilter": "||site.api.espn.com/",
       "resourceTypes": ["xmlhttprequest", "script", "other"]
     }
   }

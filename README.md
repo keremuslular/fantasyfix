@@ -6,18 +6,22 @@ Browser extension for Chrome, Firefox and Safari (Mac + iPhone/iPad) that fixes 
 
 In some places, ESPN's CDN answers the fantasy site's requests to `site.api.espn.com` with **403 Access Denied**. ESPN serves the same data at `site.web.api.espn.com`, which isn't blocked.
 
-The extension contains **one redirect rule** ([extension/rules.json](extension/rules.json)): any request to `https://site.api.espn.com/...` is sent to `https://site.web.api.espn.com/...` instead. That's all it does.
+The extension sends every request for `https://site.api.espn.com/...` to `https://site.web.api.espn.com/...` instead, in two small parts:
 
-- No JavaScript, no background script, no popup.
-- Permissions: `declarativeNetRequest` plus access to `*.espn.com` (browsers require host access for redirects).
-- It doesn't read pages, cookies or data, and it sends nothing anywhere.
+- [extension/rules.json](extension/rules.json): one browser redirect rule. Chrome and Firefox use this.
+- [extension/inject.js](extension/inject.js): about 30 lines that run on `fantasy.espn.com` and swap the hostname in the page's own `fetch`/`XMLHttpRequest` calls. Safari needs this: it loads the redirect rule, but in testing (Safari 27) it never applied it.
+
+Nothing else:
+- Permissions: `declarativeNetRequest` plus access to `*.espn.com`.
+- It doesn't read cookies or page content, and it sends nothing anywhere.
 
 ## Layout
 
 ```
 extension/          the extension (shared by every browser)
   manifest.json
-  rules.json        the one redirect rule
+  rules.json        redirect rule (Chrome, Firefox)
+  inject.js         hostname swap inside fantasy.espn.com pages (needed for Safari)
   icons/
 safari/FantasyFix/  Xcode project: Safari app + extension for macOS and iOS (uses extension/ directly)
 tools/

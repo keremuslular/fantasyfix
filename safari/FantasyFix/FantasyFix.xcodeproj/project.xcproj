@@ -81,6 +81,12 @@
                 "FantasyFix Extension (macOS)/resources",
               ],
             }, {
+              "path": "../../../extension/inject.js",
+              "target-membership": [
+                "FantasyFix Extension (iOS)/resources",
+                "FantasyFix Extension (macOS)/resources",
+              ],
+            }, {
               "path": "../../../extension/rules.json",
               "target-membership": [
                 "FantasyFix Extension (iOS)/resources",

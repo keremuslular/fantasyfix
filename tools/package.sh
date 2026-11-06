@@ -6,5 +6,5 @@ VERSION=$(python3 -c 'import json; print(json.load(open("extension/manifest.json
 mkdir -p dist
 OUT="dist/fantasyfix-$VERSION.zip"
 rm -f "$OUT"
-(cd extension && zip -qrX "../$OUT" manifest.json rules.json icons -x "*.DS_Store")
+(cd extension && zip -qrX "../$OUT" . -x "*.DS_Store" "_metadata/*")
 echo "$OUT"
