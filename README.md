@@ -24,11 +24,17 @@ extension/          the extension (shared by every browser)
   inject.js         hostname swap inside fantasy.espn.com pages (needed for Safari)
   icons/
 safari/FantasyFix/  Xcode project: Safari app + extension for macOS and iOS (uses extension/ directly)
+store/              store listing text (LISTING.md), privacy policy, screenshot, promo tile, icon
+  screenshot.html   source for the screenshot / promo images (rendered with headless Chrome)
 tools/
   package.sh        builds dist/fantasyfix-<version>.zip for Chrome / Firefox
   test-chrome.mjs   loads ESPN Fantasy in headless Chrome with/without the extension
   make_icons.py     draws the icons
 ```
+
+## Publishing
+
+Everything the Chrome Web Store and Firefox Add-ons forms ask for (texts, permission justifications, images) is in [store/LISTING.md](store/LISTING.md).
 
 ## Chrome (and Edge, Brave, Arc)
 

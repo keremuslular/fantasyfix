@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+body{position:relative;width:1280px;height:800px;font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+ background:linear-gradient(135deg,#1c1f2b 0%,#2a2117 100%);color:#fff;display:flex;align-items:center;padding:0 84px;gap:72px;overflow:hidden}
+.left{flex:1}
+.brand{display:flex;align-items:center;gap:22px;margin-bottom:34px}
+.brand img{width:104px;height:104px}
+.brand h1{font-size:54px;font-weight:800;letter-spacing:-1px}
+h2{font-size:40px;line-height:1.18;font-weight:700;margin-bottom:26px;letter-spacing:-.5px}
+h2 span{color:#ff9a3c}
+ul{list-style:none;padding:0;font-size:23px;line-height:1.5;color:#d7d2c8}
+li{padding-left:34px;position:relative;margin-bottom:10px}
+li:before{content:"";position:absolute;left:0;top:11px;width:14px;height:14px;border-radius:50%;background:#ff9a3c}
+.right{width:480px;display:flex;flex-direction:column;gap:22px}
+.card{border-radius:18px;padding:24px 26px;background:#fff;color:#1d1d1f;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.tag{display:inline-block;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:6px;margin-bottom:14px}
+.bad .tag{background:#fde2e1;color:#c62828}.good .tag{background:#dff5e3;color:#1e7b34}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:20px;padding:11px 0;border-top:1px solid #eee}
+.row:first-of-type{border-top:0}
+.name{font-weight:600}.muted{color:#9a9a9f}.ok{color:#1e7b34;font-weight:600}
+.err{font-family:Menlo,monospace;font-size:17px;color:#c62828}
+.foot{position:absolute;left:84px;bottom:34px;font-size:15px;color:#8d877c}
+</style></head><body>
+<div class="left">
+ <div class="brand"><img src="icon-512.png"><h1>FantasyFix</h1></div>
+ <h2>Missing matchups and stats<br>on ESPN Fantasy? <span>Fixed.</span></h2>
+ <ul>
+  <li>Brings back opponents, game status and past-day stats</li>
+  <li>Loads ESPN's own data from its working server</li>
+  <li>No account, no tracking, nothing collected</li>
+ </ul>
+</div>
+<div class="right">
+ <div class="card bad"><div class="tag">Without FantasyFix</div>
+  <div class="row"><span class="name">Player A</span><span class="muted">— —</span></div>
+  <div class="row"><span class="name">Player B</span><span class="muted">— —</span></div>
+  <div class="row"><span class="err">403 Access Denied</span></div>
+ </div>
+ <div class="card good"><div class="tag">With FantasyFix</div>
+  <div class="row"><span class="name">Player A</span><span class="ok">vs BOS · 7:30 PM</span></div>
+  <div class="row"><span class="name">Player B</span><span class="ok">@ LAL · 31 pts yesterday</span></div>
+  <div class="row"><span class="ok">Stats loaded</span></div>
+ </div>
+</div>
+<div class="foot">Independent project. Not affiliated with or endorsed by ESPN.</div>
+</body></html>
