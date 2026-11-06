@@ -1,0 +1,5 @@
+.DS_Store
+dist/
+extension/_metadata/
+xcuserdata/
+*.xcuserstate
