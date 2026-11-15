@@ -18,3 +18,4 @@ a{color:var(--accent)}
 ol li,ul li{margin-bottom:6px}
 code{background:var(--line);padding:1px 5px;border-radius:5px;font-size:.9em}
 footer{margin-top:48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+.alt{display:inline-block;margin-left:6px;font-size:14px;color:var(--muted)}
